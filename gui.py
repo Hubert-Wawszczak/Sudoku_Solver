@@ -159,11 +159,18 @@ def format_time(secs):
     mat = " " + str(minute) + ":" + str(sec)
     return mat
 
+def time_convert(sec):
+    mins = sec // 60
+    sec = sec % 60
+    hours = mins // 60
+    mins = mins % 60
+    print("Time Lapsed = {0}:{1}:{2}".format(int(hours),int(mins),sec))
 
 def main():
     win = pygame.display.set_mode((540,600))
     pygame.display.set_caption("Sudoku")
     board = Grid(9, 9, 540, 540)
+    board_empty = Grid(9, 9, 540, 540)
     key = None
     run = True
     start = time.time()
@@ -199,7 +206,11 @@ def main():
                     board.clear()
                     key = None
                 if event.key == pygame.K_SPACE:
+                    start_time = time.time()
                     solve(board.board)
+                    end_time = time.time()
+                    time_lapsed = end_time - start_time
+                    time_convert(time_lapsed)
                     board2 = Grid(9, 9, 540, 540)
                     board2.board = board.board
                     print_board(board2.board)
